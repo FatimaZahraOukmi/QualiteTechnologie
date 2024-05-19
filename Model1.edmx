@@ -1,0 +1,857 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="GStockQualiTechModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Achat">
+          <Key>
+            <PropertyRef Name="AchatId" />
+          </Key>
+          <Property Name="AchatId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UtilisateurId" Type="int" Nullable="false" />
+          <Property Name="FournisseurId" Type="int" />
+          <Property Name="Date_Achat" Type="datetime" Nullable="false" />
+          <Property Name="Montant_Total" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Articles">
+          <Key>
+            <PropertyRef Name="ArticleId" />
+          </Key>
+          <Property Name="ArticleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Designation" Type="varchar" MaxLength="255" />
+          <Property Name="TypeArticleId" Type="int" />
+          <Property Name="PrixUnitaire" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="QuantiteStock" Type="int" />
+          <Property Name="FournisseurId" Type="int" />
+          <Property Name="Reference" Type="varchar" MaxLength="50" />
+          <Property Name="DateReception" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Clients">
+          <Key>
+            <PropertyRef Name="ClientId" />
+          </Key>
+          <Property Name="ClientId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Entreprise" Type="varchar" MaxLength="100" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
+          <Property Name="TelephoneFax" Type="varchar" MaxLength="20" />
+          <Property Name="Ville" Type="varchar" MaxLength="255" />
+          <Property Name="TypeArticleId" Type="int" />
+        </EntityType>
+        <EntityType Name="DetailAchat">
+          <Key>
+            <PropertyRef Name="ID_DetailAchat" />
+          </Key>
+          <Property Name="ID_DetailAchat" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AchatId" Type="int" />
+          <Property Name="ArticleId" Type="int" Nullable="false" />
+          <Property Name="Reference" Type="varchar" MaxLength="50" />
+          <Property Name="Designation" Type="varchar" MaxLength="255" />
+          <Property Name="PrixUnitaire" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="Quantite" Type="int" />
+          <Property Name="Montant_Produit" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="TypeArticleId" Type="int" />
+        </EntityType>
+        <EntityType Name="DetailVente">
+          <Key>
+            <PropertyRef Name="ID_DetailVente" />
+          </Key>
+          <Property Name="ID_DetailVente" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="VenteId" Type="int" Nullable="false" />
+          <Property Name="ArticleId" Type="int" Nullable="false" />
+          <Property Name="Reference" Type="varchar" MaxLength="50" />
+          <Property Name="Designation" Type="varchar" MaxLength="255" />
+          <Property Name="PrixUnitaire" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="Quantite" Type="int" />
+          <Property Name="Montant_Produit" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="TypeArticleId" Type="int" />
+        </EntityType>
+        <EntityType Name="Fournisseurs">
+          <Key>
+            <PropertyRef Name="FournisseurId" />
+          </Key>
+          <Property Name="FournisseurId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Entreprise" Type="varchar" MaxLength="100" />
+          <Property Name="Ville" Type="varchar" MaxLength="255" />
+          <Property Name="Email" Type="varchar" MaxLength="255" />
+          <Property Name="Telephone" Type="varchar" MaxLength="20" />
+          <Property Name="TypeArticleId" Type="int" />
+        </EntityType>
+        <EntityType Name="TypeArticle">
+          <Key>
+            <PropertyRef Name="TypeArticleId" />
+          </Key>
+          <Property Name="TypeArticleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Libelle" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Utilisateurs">
+          <Key>
+            <PropertyRef Name="UtilisateurId" />
+          </Key>
+          <Property Name="UtilisateurId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nom" Type="varchar" MaxLength="50" />
+          <Property Name="Prenom" Type="varchar" MaxLength="50" />
+          <Property Name="Login" Type="varchar" MaxLength="50" />
+          <Property Name="Password" Type="varchar" MaxLength="50" />
+          <Property Name="Telephone" Type="varchar" MaxLength="20" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
+          <Property Name="Role" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Vente">
+          <Key>
+            <PropertyRef Name="VenteId" />
+          </Key>
+          <Property Name="VenteId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UtilisateurId" Type="int" Nullable="false" />
+          <Property Name="ClientID" Type="int" />
+          <Property Name="Date_Vente" Type="datetime" Nullable="false" />
+          <Property Name="Montant_Total" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Achat__Fournisse__5070F446">
+          <End Role="Fournisseurs" Type="Self.Fournisseurs" Multiplicity="0..1" />
+          <End Role="Achat" Type="Self.Achat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Fournisseurs">
+              <PropertyRef Name="FournisseurId" />
+            </Principal>
+            <Dependent Role="Achat">
+              <PropertyRef Name="FournisseurId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Achat__Utilisate__5165187F">
+          <End Role="Utilisateurs" Type="Self.Utilisateurs" Multiplicity="1" />
+          <End Role="Achat" Type="Self.Achat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Utilisateurs">
+              <PropertyRef Name="UtilisateurId" />
+            </Principal>
+            <Dependent Role="Achat">
+              <PropertyRef Name="UtilisateurId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Articles__Fourni__5535A963">
+          <End Role="Fournisseurs" Type="Self.Fournisseurs" Multiplicity="0..1" />
+          <End Role="Articles" Type="Self.Articles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Fournisseurs">
+              <PropertyRef Name="FournisseurId" />
+            </Principal>
+            <Dependent Role="Articles">
+              <PropertyRef Name="FournisseurId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Articles__TypeAr__5441852A">
+          <End Role="TypeArticle" Type="Self.TypeArticle" Multiplicity="0..1" />
+          <End Role="Articles" Type="Self.Articles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeArticle">
+              <PropertyRef Name="TypeArticleId" />
+            </Principal>
+            <Dependent Role="Articles">
+              <PropertyRef Name="TypeArticleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Clients__TypeArt__4316F928">
+          <End Role="TypeArticle" Type="Self.TypeArticle" Multiplicity="0..1" />
+          <End Role="Clients" Type="Self.Clients" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeArticle">
+              <PropertyRef Name="TypeArticleId" />
+            </Principal>
+            <Dependent Role="Clients">
+              <PropertyRef Name="TypeArticleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DetailAch__Achat__5812160E">
+          <End Role="Achat" Type="Self.Achat" Multiplicity="0..1" />
+          <End Role="DetailAchat" Type="Self.DetailAchat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Achat">
+              <PropertyRef Name="AchatId" />
+            </Principal>
+            <Dependent Role="DetailAchat">
+              <PropertyRef Name="AchatId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DetailAch__Artic__59063A47">
+          <End Role="Articles" Type="Self.Articles" Multiplicity="1" />
+          <End Role="DetailAchat" Type="Self.DetailAchat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Articles">
+              <PropertyRef Name="ArticleId" />
+            </Principal>
+            <Dependent Role="DetailAchat">
+              <PropertyRef Name="ArticleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DetailAch__TypeA__6EF57B66">
+          <End Role="TypeArticle" Type="Self.TypeArticle" Multiplicity="0..1" />
+          <End Role="DetailAchat" Type="Self.DetailAchat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeArticle">
+              <PropertyRef Name="TypeArticleId" />
+            </Principal>
+            <Dependent Role="DetailAchat">
+              <PropertyRef Name="TypeArticleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DetailVen__Artic__5CD6CB2B">
+          <End Role="Articles" Type="Self.Articles" Multiplicity="1" />
+          <End Role="DetailVente" Type="Self.DetailVente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Articles">
+              <PropertyRef Name="ArticleId" />
+            </Principal>
+            <Dependent Role="DetailVente">
+              <PropertyRef Name="ArticleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DetailVen__TypeA__70DDC3D8">
+          <End Role="TypeArticle" Type="Self.TypeArticle" Multiplicity="0..1" />
+          <End Role="DetailVente" Type="Self.DetailVente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeArticle">
+              <PropertyRef Name="TypeArticleId" />
+            </Principal>
+            <Dependent Role="DetailVente">
+              <PropertyRef Name="TypeArticleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DetailVen__Vente__5BE2A6F2">
+          <End Role="Vente" Type="Self.Vente" Multiplicity="1" />
+          <End Role="DetailVente" Type="Self.DetailVente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vente">
+              <PropertyRef Name="VenteId" />
+            </Principal>
+            <Dependent Role="DetailVente">
+              <PropertyRef Name="VenteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Fournisse__TypeA__47DBAE45">
+          <End Role="TypeArticle" Type="Self.TypeArticle" Multiplicity="0..1" />
+          <End Role="Fournisseurs" Type="Self.Fournisseurs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeArticle">
+              <PropertyRef Name="TypeArticleId" />
+            </Principal>
+            <Dependent Role="Fournisseurs">
+              <PropertyRef Name="TypeArticleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Vente__ClientID__4BAC3F29">
+          <End Role="Clients" Type="Self.Clients" Multiplicity="0..1" />
+          <End Role="Vente" Type="Self.Vente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clients">
+              <PropertyRef Name="ClientId" />
+            </Principal>
+            <Dependent Role="Vente">
+              <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Vente__Utilisate__4CA06362">
+          <End Role="Utilisateurs" Type="Self.Utilisateurs" Multiplicity="1" />
+          <End Role="Vente" Type="Self.Vente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Utilisateurs">
+              <PropertyRef Name="UtilisateurId" />
+            </Principal>
+            <Dependent Role="Vente">
+              <PropertyRef Name="UtilisateurId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="GStockQualiTechModelStoreContainer">
+          <EntitySet Name="Achat" EntityType="Self.Achat" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Articles" EntityType="Self.Articles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Clients" EntityType="Self.Clients" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DetailAchat" EntityType="Self.DetailAchat" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DetailVente" EntityType="Self.DetailVente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Fournisseurs" EntityType="Self.Fournisseurs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TypeArticle" EntityType="Self.TypeArticle" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Utilisateurs" EntityType="Self.Utilisateurs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Vente" EntityType="Self.Vente" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Achat__Fournisse__5070F446" Association="Self.FK__Achat__Fournisse__5070F446">
+            <End Role="Fournisseurs" EntitySet="Fournisseurs" />
+            <End Role="Achat" EntitySet="Achat" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Achat__Utilisate__5165187F" Association="Self.FK__Achat__Utilisate__5165187F">
+            <End Role="Utilisateurs" EntitySet="Utilisateurs" />
+            <End Role="Achat" EntitySet="Achat" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Articles__Fourni__5535A963" Association="Self.FK__Articles__Fourni__5535A963">
+            <End Role="Fournisseurs" EntitySet="Fournisseurs" />
+            <End Role="Articles" EntitySet="Articles" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Articles__TypeAr__5441852A" Association="Self.FK__Articles__TypeAr__5441852A">
+            <End Role="TypeArticle" EntitySet="TypeArticle" />
+            <End Role="Articles" EntitySet="Articles" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Clients__TypeArt__4316F928" Association="Self.FK__Clients__TypeArt__4316F928">
+            <End Role="TypeArticle" EntitySet="TypeArticle" />
+            <End Role="Clients" EntitySet="Clients" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DetailAch__Achat__5812160E" Association="Self.FK__DetailAch__Achat__5812160E">
+            <End Role="Achat" EntitySet="Achat" />
+            <End Role="DetailAchat" EntitySet="DetailAchat" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DetailAch__Artic__59063A47" Association="Self.FK__DetailAch__Artic__59063A47">
+            <End Role="Articles" EntitySet="Articles" />
+            <End Role="DetailAchat" EntitySet="DetailAchat" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DetailAch__TypeA__6EF57B66" Association="Self.FK__DetailAch__TypeA__6EF57B66">
+            <End Role="TypeArticle" EntitySet="TypeArticle" />
+            <End Role="DetailAchat" EntitySet="DetailAchat" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DetailVen__Artic__5CD6CB2B" Association="Self.FK__DetailVen__Artic__5CD6CB2B">
+            <End Role="Articles" EntitySet="Articles" />
+            <End Role="DetailVente" EntitySet="DetailVente" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DetailVen__TypeA__70DDC3D8" Association="Self.FK__DetailVen__TypeA__70DDC3D8">
+            <End Role="TypeArticle" EntitySet="TypeArticle" />
+            <End Role="DetailVente" EntitySet="DetailVente" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DetailVen__Vente__5BE2A6F2" Association="Self.FK__DetailVen__Vente__5BE2A6F2">
+            <End Role="Vente" EntitySet="Vente" />
+            <End Role="DetailVente" EntitySet="DetailVente" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Fournisse__TypeA__47DBAE45" Association="Self.FK__Fournisse__TypeA__47DBAE45">
+            <End Role="TypeArticle" EntitySet="TypeArticle" />
+            <End Role="Fournisseurs" EntitySet="Fournisseurs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Vente__ClientID__4BAC3F29" Association="Self.FK__Vente__ClientID__4BAC3F29">
+            <End Role="Clients" EntitySet="Clients" />
+            <End Role="Vente" EntitySet="Vente" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Vente__Utilisate__4CA06362" Association="Self.FK__Vente__Utilisate__4CA06362">
+            <End Role="Utilisateurs" EntitySet="Utilisateurs" />
+            <End Role="Vente" EntitySet="Vente" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="GStockQualiTechModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Achat">
+          <Key>
+            <PropertyRef Name="AchatId" />
+          </Key>
+          <Property Name="AchatId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UtilisateurId" Type="Int32" Nullable="false" />
+          <Property Name="FournisseurId" Type="Int32" />
+          <Property Name="Date_Achat" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Montant_Total" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <NavigationProperty Name="Fournisseurs" Relationship="Self.FK__Achat__Fournisse__5070F446" FromRole="Achat" ToRole="Fournisseurs" />
+          <NavigationProperty Name="Utilisateurs" Relationship="Self.FK__Achat__Utilisate__5165187F" FromRole="Achat" ToRole="Utilisateurs" />
+          <NavigationProperty Name="DetailAchat" Relationship="Self.FK__DetailAch__Achat__5812160E" FromRole="Achat" ToRole="DetailAchat" />
+        </EntityType>
+        <EntityType Name="Articles">
+          <Key>
+            <PropertyRef Name="ArticleId" />
+          </Key>
+          <Property Name="ArticleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Designation" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="TypeArticleId" Type="Int32" />
+          <Property Name="PrixUnitaire" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="QuantiteStock" Type="Int32" />
+          <Property Name="FournisseurId" Type="Int32" />
+          <Property Name="Reference" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DateReception" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Fournisseurs" Relationship="Self.FK__Articles__Fourni__5535A963" FromRole="Articles" ToRole="Fournisseurs" />
+          <NavigationProperty Name="TypeArticle" Relationship="Self.FK__Articles__TypeAr__5441852A" FromRole="Articles" ToRole="TypeArticle" />
+          <NavigationProperty Name="DetailAchat" Relationship="Self.FK__DetailAch__Artic__59063A47" FromRole="Articles" ToRole="DetailAchat" />
+          <NavigationProperty Name="DetailVente" Relationship="Self.FK__DetailVen__Artic__5CD6CB2B" FromRole="Articles" ToRole="DetailVente" />
+        </EntityType>
+        <EntityType Name="Clients">
+          <Key>
+            <PropertyRef Name="ClientId" />
+          </Key>
+          <Property Name="ClientId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Entreprise" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TelephoneFax" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Ville" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="TypeArticleId" Type="Int32" />
+          <NavigationProperty Name="TypeArticle" Relationship="Self.FK__Clients__TypeArt__4316F928" FromRole="Clients" ToRole="TypeArticle" />
+          <NavigationProperty Name="Vente" Relationship="Self.FK__Vente__ClientID__4BAC3F29" FromRole="Clients" ToRole="Vente" />
+        </EntityType>
+        <EntityType Name="DetailAchat">
+          <Key>
+            <PropertyRef Name="ID_DetailAchat" />
+          </Key>
+          <Property Name="ID_DetailAchat" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AchatId" Type="Int32" />
+          <Property Name="ArticleId" Type="Int32" Nullable="false" />
+          <Property Name="Reference" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Designation" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="PrixUnitaire" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Quantite" Type="Int32" />
+          <Property Name="Montant_Produit" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <NavigationProperty Name="Achat" Relationship="Self.FK__DetailAch__Achat__5812160E" FromRole="DetailAchat" ToRole="Achat" />
+          <NavigationProperty Name="Articles" Relationship="Self.FK__DetailAch__Artic__59063A47" FromRole="DetailAchat" ToRole="Articles" />
+          <Property Name="TypeArticleId" Type="Int32" />
+          <NavigationProperty Name="TypeArticle" Relationship="GStockQualiTechModel.FK__DetailAch__TypeA__6EF57B66" FromRole="DetailAchat" ToRole="TypeArticle" />
+        </EntityType>
+        <EntityType Name="DetailVente">
+          <Key>
+            <PropertyRef Name="ID_DetailVente" />
+          </Key>
+          <Property Name="ID_DetailVente" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="VenteId" Type="Int32" Nullable="false" />
+          <Property Name="ArticleId" Type="Int32" Nullable="false" />
+          <Property Name="Reference" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Designation" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="PrixUnitaire" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Quantite" Type="Int32" />
+          <Property Name="Montant_Produit" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <NavigationProperty Name="Articles" Relationship="Self.FK__DetailVen__Artic__5CD6CB2B" FromRole="DetailVente" ToRole="Articles" />
+          <NavigationProperty Name="Vente" Relationship="Self.FK__DetailVen__Vente__5BE2A6F2" FromRole="DetailVente" ToRole="Vente" />
+          <Property Name="TypeArticleId" Type="Int32" />
+          <NavigationProperty Name="TypeArticle" Relationship="GStockQualiTechModel.FK__DetailVen__TypeA__70DDC3D8" FromRole="DetailVente" ToRole="TypeArticle" />
+        </EntityType>
+        <EntityType Name="Fournisseurs">
+          <Key>
+            <PropertyRef Name="FournisseurId" />
+          </Key>
+          <Property Name="FournisseurId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Entreprise" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Ville" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Telephone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="TypeArticleId" Type="Int32" />
+          <NavigationProperty Name="Achat" Relationship="Self.FK__Achat__Fournisse__5070F446" FromRole="Fournisseurs" ToRole="Achat" />
+          <NavigationProperty Name="Articles" Relationship="Self.FK__Articles__Fourni__5535A963" FromRole="Fournisseurs" ToRole="Articles" />
+          <NavigationProperty Name="TypeArticle" Relationship="Self.FK__Fournisse__TypeA__47DBAE45" FromRole="Fournisseurs" ToRole="TypeArticle" />
+        </EntityType>
+        <EntityType Name="TypeArticle">
+          <Key>
+            <PropertyRef Name="TypeArticleId" />
+          </Key>
+          <Property Name="TypeArticleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Libelle" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Articles" Relationship="Self.FK__Articles__TypeAr__5441852A" FromRole="TypeArticle" ToRole="Articles" />
+          <NavigationProperty Name="Clients" Relationship="Self.FK__Clients__TypeArt__4316F928" FromRole="TypeArticle" ToRole="Clients" />
+          <NavigationProperty Name="Fournisseurs" Relationship="Self.FK__Fournisse__TypeA__47DBAE45" FromRole="TypeArticle" ToRole="Fournisseurs" />
+          <NavigationProperty Name="DetailAchat" Relationship="GStockQualiTechModel.FK__DetailAch__TypeA__6EF57B66" FromRole="TypeArticle" ToRole="DetailAchat" />
+          <NavigationProperty Name="DetailVente" Relationship="GStockQualiTechModel.FK__DetailVen__TypeA__70DDC3D8" FromRole="TypeArticle" ToRole="DetailVente" />
+        </EntityType>
+        <EntityType Name="Utilisateurs">
+          <Key>
+            <PropertyRef Name="UtilisateurId" />
+          </Key>
+          <Property Name="UtilisateurId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nom" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Prenom" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Telephone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Role" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Achat" Relationship="Self.FK__Achat__Utilisate__5165187F" FromRole="Utilisateurs" ToRole="Achat" />
+          <NavigationProperty Name="Vente" Relationship="Self.FK__Vente__Utilisate__4CA06362" FromRole="Utilisateurs" ToRole="Vente" />
+        </EntityType>
+        <EntityType Name="Vente">
+          <Key>
+            <PropertyRef Name="VenteId" />
+          </Key>
+          <Property Name="VenteId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UtilisateurId" Type="Int32" Nullable="false" />
+          <Property Name="ClientID" Type="Int32" />
+          <Property Name="Date_Vente" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Montant_Total" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <NavigationProperty Name="Clients" Relationship="Self.FK__Vente__ClientID__4BAC3F29" FromRole="Vente" ToRole="Clients" />
+          <NavigationProperty Name="DetailVente" Relationship="Self.FK__DetailVen__Vente__5BE2A6F2" FromRole="Vente" ToRole="DetailVente" />
+          <NavigationProperty Name="Utilisateurs" Relationship="Self.FK__Vente__Utilisate__4CA06362" FromRole="Vente" ToRole="Utilisateurs" />
+        </EntityType>
+        <Association Name="FK__Achat__Fournisse__5070F446">
+          <End Role="Fournisseurs" Type="Self.Fournisseurs" Multiplicity="0..1" />
+          <End Role="Achat" Type="Self.Achat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Fournisseurs">
+              <PropertyRef Name="FournisseurId" />
+            </Principal>
+            <Dependent Role="Achat">
+              <PropertyRef Name="FournisseurId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Achat__Utilisate__5165187F">
+          <End Role="Utilisateurs" Type="Self.Utilisateurs" Multiplicity="1" />
+          <End Role="Achat" Type="Self.Achat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Utilisateurs">
+              <PropertyRef Name="UtilisateurId" />
+            </Principal>
+            <Dependent Role="Achat">
+              <PropertyRef Name="UtilisateurId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DetailAch__Achat__5812160E">
+          <End Role="Achat" Type="Self.Achat" Multiplicity="0..1" />
+          <End Role="DetailAchat" Type="Self.DetailAchat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Achat">
+              <PropertyRef Name="AchatId" />
+            </Principal>
+            <Dependent Role="DetailAchat">
+              <PropertyRef Name="AchatId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Articles__Fourni__5535A963">
+          <End Role="Fournisseurs" Type="Self.Fournisseurs" Multiplicity="0..1" />
+          <End Role="Articles" Type="Self.Articles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Fournisseurs">
+              <PropertyRef Name="FournisseurId" />
+            </Principal>
+            <Dependent Role="Articles">
+              <PropertyRef Name="FournisseurId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Articles__TypeAr__5441852A">
+          <End Role="TypeArticle" Type="Self.TypeArticle" Multiplicity="0..1" />
+          <End Role="Articles" Type="Self.Articles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeArticle">
+              <PropertyRef Name="TypeArticleId" />
+            </Principal>
+            <Dependent Role="Articles">
+              <PropertyRef Name="TypeArticleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DetailAch__Artic__59063A47">
+          <End Role="Articles" Type="Self.Articles" Multiplicity="1" />
+          <End Role="DetailAchat" Type="Self.DetailAchat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Articles">
+              <PropertyRef Name="ArticleId" />
+            </Principal>
+            <Dependent Role="DetailAchat">
+              <PropertyRef Name="ArticleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DetailVen__Artic__5CD6CB2B">
+          <End Role="Articles" Type="Self.Articles" Multiplicity="1" />
+          <End Role="DetailVente" Type="Self.DetailVente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Articles">
+              <PropertyRef Name="ArticleId" />
+            </Principal>
+            <Dependent Role="DetailVente">
+              <PropertyRef Name="ArticleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Clients__TypeArt__4316F928">
+          <End Role="TypeArticle" Type="Self.TypeArticle" Multiplicity="0..1" />
+          <End Role="Clients" Type="Self.Clients" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeArticle">
+              <PropertyRef Name="TypeArticleId" />
+            </Principal>
+            <Dependent Role="Clients">
+              <PropertyRef Name="TypeArticleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Vente__ClientID__4BAC3F29">
+          <End Role="Clients" Type="Self.Clients" Multiplicity="0..1" />
+          <End Role="Vente" Type="Self.Vente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clients">
+              <PropertyRef Name="ClientId" />
+            </Principal>
+            <Dependent Role="Vente">
+              <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DetailVen__Vente__5BE2A6F2">
+          <End Role="Vente" Type="Self.Vente" Multiplicity="1" />
+          <End Role="DetailVente" Type="Self.DetailVente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vente">
+              <PropertyRef Name="VenteId" />
+            </Principal>
+            <Dependent Role="DetailVente">
+              <PropertyRef Name="VenteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Fournisse__TypeA__47DBAE45">
+          <End Role="TypeArticle" Type="Self.TypeArticle" Multiplicity="0..1" />
+          <End Role="Fournisseurs" Type="Self.Fournisseurs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeArticle">
+              <PropertyRef Name="TypeArticleId" />
+            </Principal>
+            <Dependent Role="Fournisseurs">
+              <PropertyRef Name="TypeArticleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Vente__Utilisate__4CA06362">
+          <End Role="Utilisateurs" Type="Self.Utilisateurs" Multiplicity="1" />
+          <End Role="Vente" Type="Self.Vente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Utilisateurs">
+              <PropertyRef Name="UtilisateurId" />
+            </Principal>
+            <Dependent Role="Vente">
+              <PropertyRef Name="UtilisateurId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="GStockQualiTechEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Achat" EntityType="Self.Achat" />
+          <EntitySet Name="Articles" EntityType="Self.Articles" />
+          <EntitySet Name="Clients" EntityType="Self.Clients" />
+          <EntitySet Name="DetailAchat" EntityType="Self.DetailAchat" />
+          <EntitySet Name="DetailVente" EntityType="Self.DetailVente" />
+          <EntitySet Name="Fournisseurs" EntityType="Self.Fournisseurs" />
+          <EntitySet Name="TypeArticle" EntityType="Self.TypeArticle" />
+          <EntitySet Name="Utilisateurs" EntityType="Self.Utilisateurs" />
+          <EntitySet Name="Vente" EntityType="Self.Vente" />
+          <AssociationSet Name="FK__Achat__Fournisse__5070F446" Association="Self.FK__Achat__Fournisse__5070F446">
+            <End Role="Fournisseurs" EntitySet="Fournisseurs" />
+            <End Role="Achat" EntitySet="Achat" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Achat__Utilisate__5165187F" Association="Self.FK__Achat__Utilisate__5165187F">
+            <End Role="Utilisateurs" EntitySet="Utilisateurs" />
+            <End Role="Achat" EntitySet="Achat" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DetailAch__Achat__5812160E" Association="Self.FK__DetailAch__Achat__5812160E">
+            <End Role="Achat" EntitySet="Achat" />
+            <End Role="DetailAchat" EntitySet="DetailAchat" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Articles__Fourni__5535A963" Association="Self.FK__Articles__Fourni__5535A963">
+            <End Role="Fournisseurs" EntitySet="Fournisseurs" />
+            <End Role="Articles" EntitySet="Articles" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Articles__TypeAr__5441852A" Association="Self.FK__Articles__TypeAr__5441852A">
+            <End Role="TypeArticle" EntitySet="TypeArticle" />
+            <End Role="Articles" EntitySet="Articles" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DetailAch__Artic__59063A47" Association="Self.FK__DetailAch__Artic__59063A47">
+            <End Role="Articles" EntitySet="Articles" />
+            <End Role="DetailAchat" EntitySet="DetailAchat" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DetailVen__Artic__5CD6CB2B" Association="Self.FK__DetailVen__Artic__5CD6CB2B">
+            <End Role="Articles" EntitySet="Articles" />
+            <End Role="DetailVente" EntitySet="DetailVente" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Clients__TypeArt__4316F928" Association="Self.FK__Clients__TypeArt__4316F928">
+            <End Role="TypeArticle" EntitySet="TypeArticle" />
+            <End Role="Clients" EntitySet="Clients" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Vente__ClientID__4BAC3F29" Association="Self.FK__Vente__ClientID__4BAC3F29">
+            <End Role="Clients" EntitySet="Clients" />
+            <End Role="Vente" EntitySet="Vente" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DetailVen__Vente__5BE2A6F2" Association="Self.FK__DetailVen__Vente__5BE2A6F2">
+            <End Role="Vente" EntitySet="Vente" />
+            <End Role="DetailVente" EntitySet="DetailVente" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Fournisse__TypeA__47DBAE45" Association="Self.FK__Fournisse__TypeA__47DBAE45">
+            <End Role="TypeArticle" EntitySet="TypeArticle" />
+            <End Role="Fournisseurs" EntitySet="Fournisseurs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Vente__Utilisate__4CA06362" Association="Self.FK__Vente__Utilisate__4CA06362">
+            <End Role="Utilisateurs" EntitySet="Utilisateurs" />
+            <End Role="Vente" EntitySet="Vente" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DetailAch__TypeA__6EF57B66" Association="GStockQualiTechModel.FK__DetailAch__TypeA__6EF57B66">
+            <End Role="TypeArticle" EntitySet="TypeArticle" />
+            <End Role="DetailAchat" EntitySet="DetailAchat" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DetailVen__TypeA__70DDC3D8" Association="GStockQualiTechModel.FK__DetailVen__TypeA__70DDC3D8">
+            <End Role="TypeArticle" EntitySet="TypeArticle" />
+            <End Role="DetailVente" EntitySet="DetailVente" />
+          </AssociationSet>
+        </EntityContainer>
+        <Association Name="FK__DetailAch__TypeA__6EF57B66">
+          <End Type="GStockQualiTechModel.TypeArticle" Role="TypeArticle" Multiplicity="0..1" />
+          <End Type="GStockQualiTechModel.DetailAchat" Role="DetailAchat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeArticle">
+              <PropertyRef Name="TypeArticleId" />
+            </Principal>
+            <Dependent Role="DetailAchat">
+              <PropertyRef Name="TypeArticleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DetailVen__TypeA__70DDC3D8">
+          <End Type="GStockQualiTechModel.TypeArticle" Role="TypeArticle" Multiplicity="0..1" />
+          <End Type="GStockQualiTechModel.DetailVente" Role="DetailVente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeArticle">
+              <PropertyRef Name="TypeArticleId" />
+            </Principal>
+            <Dependent Role="DetailVente">
+              <PropertyRef Name="TypeArticleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="GStockQualiTechModelStoreContainer" CdmEntityContainer="GStockQualiTechEntities">
+          <EntitySetMapping Name="Achat">
+            <EntityTypeMapping TypeName="GStockQualiTechModel.Achat">
+              <MappingFragment StoreEntitySet="Achat">
+                <ScalarProperty Name="AchatId" ColumnName="AchatId" />
+                <ScalarProperty Name="UtilisateurId" ColumnName="UtilisateurId" />
+                <ScalarProperty Name="FournisseurId" ColumnName="FournisseurId" />
+                <ScalarProperty Name="Date_Achat" ColumnName="Date_Achat" />
+                <ScalarProperty Name="Montant_Total" ColumnName="Montant_Total" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Articles">
+            <EntityTypeMapping TypeName="GStockQualiTechModel.Articles">
+              <MappingFragment StoreEntitySet="Articles">
+                <ScalarProperty Name="ArticleId" ColumnName="ArticleId" />
+                <ScalarProperty Name="Designation" ColumnName="Designation" />
+                <ScalarProperty Name="TypeArticleId" ColumnName="TypeArticleId" />
+                <ScalarProperty Name="PrixUnitaire" ColumnName="PrixUnitaire" />
+                <ScalarProperty Name="QuantiteStock" ColumnName="QuantiteStock" />
+                <ScalarProperty Name="FournisseurId" ColumnName="FournisseurId" />
+                <ScalarProperty Name="Reference" ColumnName="Reference" />
+                <ScalarProperty Name="DateReception" ColumnName="DateReception" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Clients">
+            <EntityTypeMapping TypeName="GStockQualiTechModel.Clients">
+              <MappingFragment StoreEntitySet="Clients">
+                <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+                <ScalarProperty Name="Entreprise" ColumnName="Entreprise" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="TelephoneFax" ColumnName="TelephoneFax" />
+                <ScalarProperty Name="Ville" ColumnName="Ville" />
+                <ScalarProperty Name="TypeArticleId" ColumnName="TypeArticleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DetailAchat">
+            <EntityTypeMapping TypeName="GStockQualiTechModel.DetailAchat">
+              <MappingFragment StoreEntitySet="DetailAchat">
+                <ScalarProperty Name="TypeArticleId" ColumnName="TypeArticleId" />
+                <ScalarProperty Name="ID_DetailAchat" ColumnName="ID_DetailAchat" />
+                <ScalarProperty Name="AchatId" ColumnName="AchatId" />
+                <ScalarProperty Name="ArticleId" ColumnName="ArticleId" />
+                <ScalarProperty Name="Reference" ColumnName="Reference" />
+                <ScalarProperty Name="Designation" ColumnName="Designation" />
+                <ScalarProperty Name="PrixUnitaire" ColumnName="PrixUnitaire" />
+                <ScalarProperty Name="Quantite" ColumnName="Quantite" />
+                <ScalarProperty Name="Montant_Produit" ColumnName="Montant_Produit" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DetailVente">
+            <EntityTypeMapping TypeName="GStockQualiTechModel.DetailVente">
+              <MappingFragment StoreEntitySet="DetailVente">
+                <ScalarProperty Name="TypeArticleId" ColumnName="TypeArticleId" />
+                <ScalarProperty Name="ID_DetailVente" ColumnName="ID_DetailVente" />
+                <ScalarProperty Name="VenteId" ColumnName="VenteId" />
+                <ScalarProperty Name="ArticleId" ColumnName="ArticleId" />
+                <ScalarProperty Name="Reference" ColumnName="Reference" />
+                <ScalarProperty Name="Designation" ColumnName="Designation" />
+                <ScalarProperty Name="PrixUnitaire" ColumnName="PrixUnitaire" />
+                <ScalarProperty Name="Quantite" ColumnName="Quantite" />
+                <ScalarProperty Name="Montant_Produit" ColumnName="Montant_Produit" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Fournisseurs">
+            <EntityTypeMapping TypeName="GStockQualiTechModel.Fournisseurs">
+              <MappingFragment StoreEntitySet="Fournisseurs">
+                <ScalarProperty Name="FournisseurId" ColumnName="FournisseurId" />
+                <ScalarProperty Name="Entreprise" ColumnName="Entreprise" />
+                <ScalarProperty Name="Ville" ColumnName="Ville" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+                <ScalarProperty Name="TypeArticleId" ColumnName="TypeArticleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TypeArticle">
+            <EntityTypeMapping TypeName="GStockQualiTechModel.TypeArticle">
+              <MappingFragment StoreEntitySet="TypeArticle">
+                <ScalarProperty Name="TypeArticleId" ColumnName="TypeArticleId" />
+                <ScalarProperty Name="Libelle" ColumnName="Libelle" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Utilisateurs">
+            <EntityTypeMapping TypeName="GStockQualiTechModel.Utilisateurs">
+              <MappingFragment StoreEntitySet="Utilisateurs">
+                <ScalarProperty Name="UtilisateurId" ColumnName="UtilisateurId" />
+                <ScalarProperty Name="Nom" ColumnName="Nom" />
+                <ScalarProperty Name="Prenom" ColumnName="Prenom" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Vente">
+            <EntityTypeMapping TypeName="GStockQualiTechModel.Vente">
+              <MappingFragment StoreEntitySet="Vente">
+                <ScalarProperty Name="VenteId" ColumnName="VenteId" />
+                <ScalarProperty Name="UtilisateurId" ColumnName="UtilisateurId" />
+                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+                <ScalarProperty Name="Date_Vente" ColumnName="Date_Vente" />
+                <ScalarProperty Name="Montant_Total" ColumnName="Montant_Total" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Aucun" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="b5ac915a49544b769dfbdda701101ead" Name="Diagram1">
+        <EntityTypeShape EntityType="GStockQualiTechModel.Achat" Width="1.5" PointX="6.5" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="GStockQualiTechModel.Articles" Width="1.5" PointX="6.125" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="GStockQualiTechModel.Clients" Width="1.5" PointX="0.5" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="GStockQualiTechModel.DetailAchat" Width="1.5" PointX="7.875" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GStockQualiTechModel.DetailVente" Width="1.5" PointX="2.375" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GStockQualiTechModel.Fournisseurs" Width="1.5" PointX="8.5" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="GStockQualiTechModel.TypeArticle" Width="1.5" PointX="4.125" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="GStockQualiTechModel.Utilisateurs" Width="1.5" PointX="4.25" PointY="0.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="GStockQualiTechModel.Vente" Width="1.5" PointX="1.5" PointY="0.625" IsExpanded="true" />
+        <AssociationConnector Association="GStockQualiTechModel.FK__Achat__Fournisse__5070F446" ManuallyRouted="false" />
+        <AssociationConnector Association="GStockQualiTechModel.FK__Achat__Utilisate__5165187F" ManuallyRouted="false" />
+        <AssociationConnector Association="GStockQualiTechModel.FK__DetailAch__Achat__5812160E" ManuallyRouted="false" />
+        <AssociationConnector Association="GStockQualiTechModel.FK__Articles__Fourni__5535A963" ManuallyRouted="false" />
+        <AssociationConnector Association="GStockQualiTechModel.FK__Articles__TypeAr__5441852A" ManuallyRouted="false" />
+        <AssociationConnector Association="GStockQualiTechModel.FK__DetailAch__Artic__59063A47" ManuallyRouted="false" />
+        <AssociationConnector Association="GStockQualiTechModel.FK__DetailVen__Artic__5CD6CB2B" ManuallyRouted="false" />
+        <AssociationConnector Association="GStockQualiTechModel.FK__Clients__TypeArt__4316F928" ManuallyRouted="false" />
+        <AssociationConnector Association="GStockQualiTechModel.FK__Vente__ClientID__4BAC3F29" ManuallyRouted="false" />
+        <AssociationConnector Association="GStockQualiTechModel.FK__DetailVen__Vente__5BE2A6F2" ManuallyRouted="false" />
+        <AssociationConnector Association="GStockQualiTechModel.FK__Fournisse__TypeA__47DBAE45" ManuallyRouted="false" />
+        <AssociationConnector Association="GStockQualiTechModel.FK__Vente__Utilisate__4CA06362" ManuallyRouted="false" />
+        <AssociationConnector Association="GStockQualiTechModel.FK__DetailAch__TypeA__6EF57B66" />
+        <AssociationConnector Association="GStockQualiTechModel.FK__DetailVen__TypeA__70DDC3D8" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
