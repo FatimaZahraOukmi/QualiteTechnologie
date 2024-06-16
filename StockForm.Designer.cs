@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StockForm));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabAjouter = new System.Windows.Forms.TabPage();
             this.btnRefresh = new System.Windows.Forms.Button();
@@ -777,8 +778,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(798, 541);
             this.Controls.Add(this.tabControl1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "StockForm";
-            this.Text = "StockForm";
+            this.Text = "Gestion de Stock";
             this.Load += new System.EventHandler(this.StockForm_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabAjouter.ResumeLayout(false);

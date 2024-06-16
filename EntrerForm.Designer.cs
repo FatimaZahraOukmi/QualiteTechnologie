@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EntrerForm));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.TabBC = new System.Windows.Forms.TabPage();
             this.btnValide = new System.Windows.Forms.Button();
@@ -559,8 +560,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(799, 537);
             this.Controls.Add(this.tabControl1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "EntrerForm";
-            this.Text = "EntrerForm";
+            this.Text = "Gestion des Achats";
             this.Load += new System.EventHandler(this.EntrerForm_Load);
             this.tabControl1.ResumeLayout(false);
             this.TabBC.ResumeLayout(false);

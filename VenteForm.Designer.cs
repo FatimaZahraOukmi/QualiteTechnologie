@@ -45,6 +45,7 @@
             this.label11 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
             this.EffVente = new System.Windows.Forms.TabPage();
+            this.btnDelete = new System.Windows.Forms.Button();
             this.comboDes = new System.Windows.Forms.ComboBox();
             this.label12 = new System.Windows.Forms.Label();
             this.lblPrixU = new System.Windows.Forms.Label();
@@ -67,7 +68,7 @@
             this.comboArticle = new System.Windows.Forms.ComboBox();
             this.label10 = new System.Windows.Forms.Label();
             this.ListeVente = new System.Windows.Forms.TabPage();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnActualise = new System.Windows.Forms.Button();
             this.dataListV = new System.Windows.Forms.DataGridView();
             this.label14 = new System.Windows.Forms.Label();
             this.printDocument1 = new System.Drawing.Printing.PrintDocument();
@@ -180,6 +181,7 @@
             this.dataGridBL.Name = "dataGridBL";
             this.dataGridBL.Size = new System.Drawing.Size(776, 284);
             this.dataGridBL.TabIndex = 111;
+            this.dataGridBL.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridBL_CellClick);
             // 
             // dateSortie
             // 
@@ -261,6 +263,7 @@
             // EffVente
             // 
             this.EffVente.BackColor = System.Drawing.Color.AliceBlue;
+            this.EffVente.Controls.Add(this.btnDelete);
             this.EffVente.Controls.Add(this.comboDes);
             this.EffVente.Controls.Add(this.label12);
             this.EffVente.Controls.Add(this.lblPrixU);
@@ -290,6 +293,19 @@
             this.EffVente.TabIndex = 0;
             this.EffVente.Text = "Effectuer une Vente";
             this.EffVente.Click += new System.EventHandler(this.EffVente_Click);
+            // 
+            // btnDelete
+            // 
+            this.btnDelete.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(83)))), ((int)(((byte)(160)))));
+            this.btnDelete.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDelete.ForeColor = System.Drawing.Color.White;
+            this.btnDelete.Location = new System.Drawing.Point(327, 469);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(134, 38);
+            this.btnDelete.TabIndex = 181;
+            this.btnDelete.Text = "Supprimer";
+            this.btnDelete.UseVisualStyleBackColor = false;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
             // comboDes
             // 
@@ -414,7 +430,7 @@
             this.btnAddOtherArt.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(83)))), ((int)(((byte)(160)))));
             this.btnAddOtherArt.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAddOtherArt.ForeColor = System.Drawing.Color.White;
-            this.btnAddOtherArt.Location = new System.Drawing.Point(650, 469);
+            this.btnAddOtherArt.Location = new System.Drawing.Point(476, 469);
             this.btnAddOtherArt.Name = "btnAddOtherArt";
             this.btnAddOtherArt.Size = new System.Drawing.Size(134, 38);
             this.btnAddOtherArt.TabIndex = 157;
@@ -491,7 +507,7 @@
             this.btnSave.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(83)))), ((int)(((byte)(160)))));
             this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSave.ForeColor = System.Drawing.Color.White;
-            this.btnSave.Location = new System.Drawing.Point(513, 469);
+            this.btnSave.Location = new System.Drawing.Point(626, 469);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(131, 38);
             this.btnSave.TabIndex = 143;
@@ -522,7 +538,7 @@
             // ListeVente
             // 
             this.ListeVente.BackColor = System.Drawing.Color.AliceBlue;
-            this.ListeVente.Controls.Add(this.button1);
+            this.ListeVente.Controls.Add(this.btnActualise);
             this.ListeVente.Controls.Add(this.dataListV);
             this.ListeVente.Controls.Add(this.label14);
             this.ListeVente.Location = new System.Drawing.Point(4, 22);
@@ -532,19 +548,19 @@
             this.ListeVente.TabIndex = 1;
             this.ListeVente.Text = "Liste des Ventes";
             // 
-            // button1
+            // btnActualise
             // 
-            this.button1.BackColor = System.Drawing.Color.AliceBlue;
-            this.button1.BackgroundImage = global::QualiTech.Properties.Resources.icons8_refresh_20;
-            this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.ForeColor = System.Drawing.Color.White;
-            this.button1.Location = new System.Drawing.Point(744, 37);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(39, 38);
-            this.button1.TabIndex = 87;
-            this.button1.UseVisualStyleBackColor = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.btnActualise.BackColor = System.Drawing.Color.AliceBlue;
+            this.btnActualise.BackgroundImage = global::QualiTech.Properties.Resources.icons8_refresh_20;
+            this.btnActualise.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnActualise.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnActualise.ForeColor = System.Drawing.Color.White;
+            this.btnActualise.Location = new System.Drawing.Point(744, 37);
+            this.btnActualise.Name = "btnActualise";
+            this.btnActualise.Size = new System.Drawing.Size(39, 38);
+            this.btnActualise.TabIndex = 87;
+            this.btnActualise.UseVisualStyleBackColor = false;
+            this.btnActualise.Click += new System.EventHandler(this.btnActualise_Click);
             // 
             // dataListV
             // 
@@ -570,6 +586,7 @@
             this.printPreviewDialog1.AutoScrollMargin = new System.Drawing.Size(0, 0);
             this.printPreviewDialog1.AutoScrollMinSize = new System.Drawing.Size(0, 0);
             this.printPreviewDialog1.ClientSize = new System.Drawing.Size(400, 300);
+            this.printPreviewDialog1.Document = this.printDocument1;
             this.printPreviewDialog1.Enabled = true;
             this.printPreviewDialog1.Icon = ((System.Drawing.Icon)(resources.GetObject("printPreviewDialog1.Icon")));
             this.printPreviewDialog1.Name = "printPreviewDialog1";
@@ -581,8 +598,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(804, 540);
             this.Controls.Add(this.tabControl1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "VenteForm";
-            this.Text = "VenteForm";
+            this.Text = "Gestion des Ventes";
             this.Load += new System.EventHandler(this.VenteForm_Load);
             this.tabControl1.ResumeLayout(false);
             this.TabFacture.ResumeLayout(false);
@@ -635,7 +653,7 @@
         private System.Windows.Forms.ComboBox comboArticle;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TabPage ListeVente;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnActualise;
         private System.Windows.Forms.DataGridView dataListV;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Button btnValide;
@@ -644,5 +662,6 @@
         private System.Windows.Forms.Label label12;
         private System.Drawing.Printing.PrintDocument printDocument1;
         private System.Windows.Forms.PrintPreviewDialog printPreviewDialog1;
+        private System.Windows.Forms.Button btnDelete;
     }
 }

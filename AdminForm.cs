@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -11,6 +12,8 @@ namespace QualiTech
         public AdminForm()
         {
             InitializeComponent();
+            btnSearch.Click += btnSearch_Click;
+
         }
         private void AdminForm_Load(object sender, EventArgs e)
         {
@@ -113,11 +116,12 @@ namespace QualiTech
                     utilisateur.Login = txtLogin.Text;
                     GSe.Utilisateurs.Add(utilisateur);
                     GSe.SaveChanges();
+                    MessageBox.Show("Added successfuly!");
                 }
                 else MessageBox.Show("Le login existe déjà.Veuillez choisir un login unique.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             else MessageBox.Show("Fill all the fields!");
-            MessageBox.Show("Added successfuly!");
+
 
         }
         private void btnNew_Click(object sender, EventArgs e)
@@ -134,33 +138,54 @@ namespace QualiTech
         }
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            var Update = GSe.Utilisateurs.FirstOrDefault(u => u.Login == txtSearch.Text);
-            if (Update != null)
+            try
             {
-                Update.Nom = txtNom.Text;
-                Update.Prenom = txtPrenom.Text;
-                Update.Role = txtRole.Text;
-                Update.Email = txtMail.Text;
-                Update.Telephone = txtTel.Text;
-                Update.Password = txtPassword.Text;
-                Update.Login = txtLogin.Text;
-                GSe.SaveChanges();
+                var Update = GSe.Utilisateurs.FirstOrDefault(u => u.Login == txtSearch.Text);
+                if (Update != null)
+                {
+                    Update.Nom = txtNom.Text;
+                    Update.Prenom = txtPrenom.Text;
+                    Update.Role = txtRole.Text;
+                    Update.Email = txtMail.Text;
+                    Update.Telephone = txtTel.Text;
+                    Update.Password = txtPassword.Text;
+                    Update.Login = txtLogin.Text;
+                    GSe.SaveChanges();
+                    MessageBox.Show("Utilisateur mis à jour avec succès.", "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                }
+                MessageBox.Show("Veuillez entrer un login existant avant de rechercher.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            MessageBox.Show("Veuillez entrer un login existant avant de rechercher.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Une erreur s'est produite : {ex.Message}", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
         private void btnDelette_Click(object sender, EventArgs e)
         {
-            var Delete = GSe.Utilisateurs.FirstOrDefault(u => u.Login == txtSearch.Text);
-            if (Delete != null)
+            try
             {
-                GSe.Utilisateurs.Attach(Delete);
-                GSe.Utilisateurs.Remove(Delete);
-                GSe.SaveChanges();
-                MessageBox.Show("L'utilisateur a été supprimé avec succès.", "Supprission", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            else
-                MessageBox.Show("Veuillez entrer un login deja existe avant de rechercher.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                var Delete = GSe.Utilisateurs.FirstOrDefault(u => u.Login == txtSearch.Text);
+                if (Delete != null)
+                {
+                    GSe.Utilisateurs.Attach(Delete);
+                    GSe.Utilisateurs.Remove(Delete);
+                    GSe.SaveChanges();
+                    MessageBox.Show("L'utilisateur a été supprimé avec succès.", "Supprission", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                    MessageBox.Show("Veuillez entrer un login deja existe avant de rechercher.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
+            }
+            catch (DbUpdateException dbEx)
+            {
+                MessageBox.Show("Une erreur s'est produite lors de la mise à jour de la base de données : " + dbEx.InnerException?.Message, "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                // Autres exceptions générales
+                MessageBox.Show("Une erreur inattendue s'est produite : " + ex.Message, "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
         private void btnSearch_Click(object sender, EventArgs e)
         {

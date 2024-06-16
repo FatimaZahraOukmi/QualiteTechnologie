@@ -21,23 +21,22 @@ namespace QualiTech
         {
             // Remplissez votre liste ou tableau avec les données à afficher
             articlesList = GSe.Articles.ToList();
-
+            // Définir les valeurs maximum et minimum des contrôles numériques
             numericPU.Maximum = 30000;
             numericPrix.Maximum = 30000;
             numericQteS.Maximum = 30000;
             numericQte.Maximum = 30000;
-
             numericPU.Minimum = 0;
             numericPrix.Minimum = 0;
             numericQteS.Minimum = 0;
             numericQte.Minimum = 0;
-
+            // Définir la valeur par défaut des contrôles de date
             dateTimePicker1.Value = DateTime.Now;
             dateMod.Value = DateTime.Now;
 
             articlesList = GSe.Articles.ToList();
 
-
+            // Actualiser les données dans les DataGridView
             RefreshGridS();
             RefreshType();
             RefreshFrs();
@@ -119,18 +118,23 @@ namespace QualiTech
         }
         private bool ValidateArticle()
         {
-            if (numericQte.Value > 0 && numericPU.Value > 0 &&
-                !string.IsNullOrWhiteSpace(txtDesignation.Text) &&
-                !string.IsNullOrWhiteSpace(txtRef.Text))
-            {
-                return true;
-            }
-            else
+            // Vérifier si les champs obligatoires sont remplis
+            if (string.IsNullOrWhiteSpace(txtDesignation.Text) ||
+                string.IsNullOrWhiteSpace(txtRef.Text))
             {
                 MessageBox.Show("Veuillez remplir tous les champs obligatoires.", "Erreur de validation", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
+            // Vérifier si les valeurs numériques sont dans des plages acceptables
+            if (numericQte.Value <= 0 || numericPU.Value <= 0)
+            {
+                MessageBox.Show("Les valeurs numériques doivent être supérieures à zéro.", "Erreur de validation", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            // Si toutes les conditions sont remplies, retournez true
+            return true;
         }
+
         private void btnActualiser_Click(object sender, EventArgs e)
         {
             RefreshGridS();

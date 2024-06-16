@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ClientForm));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.UpdateClients = new System.Windows.Forms.TabPage();
             this.comboType = new System.Windows.Forms.ComboBox();
@@ -52,6 +53,7 @@
             this.btnRefresh = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.label14 = new System.Windows.Forms.Label();
+            this.btnHome = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.UpdateClients.SuspendLayout();
             this.ListeClients.SuspendLayout();
@@ -70,6 +72,8 @@
             // 
             // UpdateClients
             // 
+            this.UpdateClients.BackColor = System.Drawing.Color.AliceBlue;
+            this.UpdateClients.Controls.Add(this.btnHome);
             this.UpdateClients.Controls.Add(this.comboType);
             this.UpdateClients.Controls.Add(this.label4);
             this.UpdateClients.Controls.Add(this.btnNew);
@@ -94,7 +98,6 @@
             this.UpdateClients.Size = new System.Drawing.Size(789, 481);
             this.UpdateClients.TabIndex = 0;
             this.UpdateClients.Text = "Gérer les Clients";
-            this.UpdateClients.UseVisualStyleBackColor = true;
             // 
             // comboType
             // 
@@ -320,14 +323,31 @@
             this.label14.TabIndex = 82;
             this.label14.Text = "Liste des Clients";
             // 
+            // btnHome
+            // 
+            this.btnHome.AutoSize = true;
+            this.btnHome.BackColor = System.Drawing.Color.AliceBlue;
+            this.btnHome.BackgroundImage = global::QualiTech.Properties.Resources.icons8_home_32;
+            this.btnHome.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnHome.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnHome.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnHome.ForeColor = System.Drawing.Color.AliceBlue;
+            this.btnHome.Location = new System.Drawing.Point(730, 8);
+            this.btnHome.Name = "btnHome";
+            this.btnHome.Size = new System.Drawing.Size(39, 44);
+            this.btnHome.TabIndex = 81;
+            this.btnHome.UseVisualStyleBackColor = false;
+            this.btnHome.Click += new System.EventHandler(this.btnReturn_Click);
+            // 
             // ClientForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 510);
             this.Controls.Add(this.tabControl1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ClientForm";
-            this.Text = "ClientForm";
+            this.Text = "Client";
             this.Load += new System.EventHandler(this.ClientForm_Load);
             this.tabControl1.ResumeLayout(false);
             this.UpdateClients.ResumeLayout(false);
@@ -365,5 +385,6 @@
         private System.Windows.Forms.Button btnRefresh;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Button btnHome;
     }
 }

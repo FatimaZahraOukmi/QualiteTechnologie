@@ -28,8 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FournisseurForm));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.UpdateFournisseurs = new System.Windows.Forms.TabPage();
+            this.btnHome = new System.Windows.Forms.Button();
             this.btnNew = new System.Windows.Forms.Button();
             this.comboType = new System.Windows.Forms.ComboBox();
             this.label15 = new System.Windows.Forms.Label();
@@ -53,7 +55,6 @@
             this.btnRefresh = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.label14 = new System.Windows.Forms.Label();
-            this.btnHome = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.UpdateFournisseurs.SuspendLayout();
             this.ListeFourniseurs.SuspendLayout();
@@ -73,6 +74,7 @@
             // 
             // UpdateFournisseurs
             // 
+            this.UpdateFournisseurs.BackColor = System.Drawing.Color.AliceBlue;
             this.UpdateFournisseurs.Controls.Add(this.btnHome);
             this.UpdateFournisseurs.Controls.Add(this.btnNew);
             this.UpdateFournisseurs.Controls.Add(this.comboType);
@@ -99,7 +101,22 @@
             this.UpdateFournisseurs.Size = new System.Drawing.Size(773, 487);
             this.UpdateFournisseurs.TabIndex = 0;
             this.UpdateFournisseurs.Text = "Gérer les fournisseurs";
-            this.UpdateFournisseurs.UseVisualStyleBackColor = true;
+            // 
+            // btnHome
+            // 
+            this.btnHome.AutoSize = true;
+            this.btnHome.BackColor = System.Drawing.Color.AliceBlue;
+            this.btnHome.BackgroundImage = global::QualiTech.Properties.Resources.icons8_home_32;
+            this.btnHome.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnHome.FlatAppearance.BorderColor = System.Drawing.Color.Red;
+            this.btnHome.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnHome.ForeColor = System.Drawing.Color.White;
+            this.btnHome.Location = new System.Drawing.Point(722, 3);
+            this.btnHome.Name = "btnHome";
+            this.btnHome.Size = new System.Drawing.Size(45, 38);
+            this.btnHome.TabIndex = 102;
+            this.btnHome.UseVisualStyleBackColor = false;
+            this.btnHome.Click += new System.EventHandler(this.btnHome_Click);
             // 
             // btnNew
             // 
@@ -338,30 +355,15 @@
             this.label14.TabIndex = 78;
             this.label14.Text = "Liste des Fournisseurs";
             // 
-            // btnHome
-            // 
-            this.btnHome.AutoSize = true;
-            this.btnHome.BackColor = System.Drawing.Color.AliceBlue;
-            this.btnHome.BackgroundImage = global::QualiTech.Properties.Resources.icons8_home_32;
-            this.btnHome.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.btnHome.FlatAppearance.BorderColor = System.Drawing.Color.Red;
-            this.btnHome.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnHome.ForeColor = System.Drawing.Color.White;
-            this.btnHome.Location = new System.Drawing.Point(722, 3);
-            this.btnHome.Name = "btnHome";
-            this.btnHome.Size = new System.Drawing.Size(45, 38);
-            this.btnHome.TabIndex = 102;
-            this.btnHome.UseVisualStyleBackColor = false;
-            this.btnHome.Click += new System.EventHandler(this.btnHome_Click);
-            // 
             // FournisseurForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(783, 514);
             this.Controls.Add(this.tabControl1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FournisseurForm";
-            this.Text = "FournisseurForm";
+            this.Text = "Fournisseurs";
             this.Load += new System.EventHandler(this.FournisseurForm_Load);
             this.tabControl1.ResumeLayout(false);
             this.UpdateFournisseurs.ResumeLayout(false);

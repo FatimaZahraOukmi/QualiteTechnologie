@@ -27,10 +27,5 @@ namespace QualiTech
         public virtual Articles Articles { get; set; }
         public virtual Vente Vente { get; set; }
         public virtual TypeArticle TypeArticle { get; set; }
-
-        internal static bool Any(Func<object, bool> value)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

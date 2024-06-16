@@ -119,33 +119,48 @@ namespace QualiTech
         }
         private void btnDelette_Click(object sender, EventArgs e)
         {
-            var fournisseursToDelete = GSe.Fournisseurs.FirstOrDefault(s => s.Entreprise == txtSearch.Text);
-            if (fournisseursToDelete != null)
+            try
             {
-                GSe.Fournisseurs.Remove(fournisseursToDelete);
-                GSe.SaveChanges();
-                MessageBox.Show("Le Fournisseur a été supprimé avec succès.", "Suppression", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                var fournisseursToDelete = GSe.Fournisseurs.FirstOrDefault(s => s.Entreprise == txtSearch.Text);
+                if (fournisseursToDelete != null)
+                {
+                    GSe.Fournisseurs.Remove(fournisseursToDelete);
+                    GSe.SaveChanges();
+                    MessageBox.Show("Le Fournisseur a été supprimé avec succès.", "Suppression", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Veuillez entrer une entreprise qui existe avant de supprimer.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("Veuillez entrer une entreprise qui existe avant de supprimer.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Une erreur s'est produite lors de la suppression du fournisseur : " + ex.Message, "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            var UpdateF = GSe.Fournisseurs.FirstOrDefault(u => u.Entreprise == txtSearch.Text);
-            if (UpdateF != null)
+            try
             {
-                UpdateF.Email = txtMail.Text;
-                UpdateF.Entreprise = txtSte.Text;
-                UpdateF.Telephone = txtTel.Text;
-                UpdateF.Ville = txtVille.Text;
-                UpdateF.TypeArticleId = (int)comboType.SelectedValue;
-                GSe.SaveChanges();
-                MessageBox.Show("Updated successfuly");
+                var UpdateF = GSe.Fournisseurs.FirstOrDefault(u => u.Entreprise == txtSearch.Text);
+                if (UpdateF != null)
+                {
+                    UpdateF.Email = txtMail.Text;
+                    UpdateF.Entreprise = txtSte.Text;
+                    UpdateF.Telephone = txtTel.Text;
+                    UpdateF.Ville = txtVille.Text;
+                    UpdateF.TypeArticleId = (int)comboType.SelectedValue;
+                    GSe.SaveChanges();
+                    MessageBox.Show("Updated successfuly");
+                }
+                else
+                    MessageBox.Show("Veuillez entrer un login existant avant de rechercher.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            else
-                MessageBox.Show("Veuillez entrer un login existant avant de rechercher.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            catch (Exception ex)
+            {
+                MessageBox.Show("Une erreur s'est produite lors de la mise à jour du fournisseur : " + ex.Message, "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void btnRefresh_Click(object sender, EventArgs e)

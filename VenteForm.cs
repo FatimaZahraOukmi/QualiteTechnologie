@@ -30,6 +30,7 @@ namespace QualiTech
         public VenteForm()
         {
             InitializeComponent();
+            dataGridBL.CellClick += dataGridBL_CellClick;
         }
 
         // Méthode pour afficher les détails de l'article sélectionné dans les contrôles de la VenteForm
@@ -327,21 +328,15 @@ namespace QualiTech
                         UtilisateurId = (int)comboUser.SelectedValue,
                         ClientID = (int)comboClt.SelectedValue,
                     };
-
                     // Ajoutez la nouvelle vente à la base de données
                     GSe.Vente.Add(nouvelleVente);
-
                     // Enregistrez les modifications dans la base de données
                     GSe.SaveChanges();
-
                     // Récupérez l'ID de la vente enregistrée
                     VenteId = nouvelleVente.VenteId;
-
                     // Passez à l'onglet 1 de votre formulaire
                     tabControl1.SelectedIndex = 1;
-
                     lblFacture.Text = nouvelleVente.VenteId.ToString() + "/2024";
-
                     // Rafraîchissez les données dans vos grilles de données
                     RefreshGridBL();
                     RefreshGridList();
@@ -423,55 +418,33 @@ namespace QualiTech
         private Bitmap bitmap;
         private void btnPrint_Click(object sender, EventArgs e)
         {
-            try
-            {
-                // Augmentez la hauteur du DataGridView pour afficher toutes les lignes
-                int originalHeight = dataListV.Height;
-                dataListV.Height = dataListV.RowCount * dataListV.RowTemplate.Height;
-
-                // Ajustez la largeur du DataGridView pour correspondre à la largeur de la page d'impression
-                int originalWidth = dataListV.Width;
-                dataListV.Width = printDocument1.DefaultPageSettings.Bounds.Width;
-
-                // Créez un bitmap pour contenir le contenu du DataGridView
-                bitmap = new Bitmap(dataListV.Width, dataListV.Height);
-                dataListV.DrawToBitmap(bitmap, new Rectangle(0, 0, dataListV.Width, dataListV.Height));
-
-                // Restaurez la taille d'origine du DataGridView
-                dataListV.Height = originalHeight;
-                dataListV.Width = originalWidth;
-
-                // Affichez la boîte de dialogue d'aperçu avant impression
-                printPreviewDialog1.Document = printDocument1;
-                printPreviewDialog1.PrintPreviewControl.Zoom = 1;
-                printPreviewDialog1.ShowDialog();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Erreur lors de l'impression : " + ex.Message);
-            }
+            printSettings(dataListV);
         }
-
         private void printDocument1_PrintPage(object sender, PrintPageEventArgs e)
         {
-            try
-            {
-                // Calculez le décalage horizontal pour centrer l'image
-                int horizontalOffset = (e.PageBounds.Width - dataListV.Width) / 2;
-                // Dessinez le bitmap sur la page d'impression
-                e.Graphics.DrawImage(bitmap, horizontalOffset, 0);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Erreur lors de l'impression de la page : " + ex.Message);
-            }
+            Rectangle pagearea = e.PageBounds;
+            e.Graphics.DrawImage(memoryimg, (pagearea.Width / 2) - (this.dataListV.Width / 2), this.dataListV.Location.Y);
+        }
+        private Bitmap memoryimg;
+        private void getprintarea(DataGridView pnl)
+        {
+            memoryimg = new Bitmap(pnl.Width, pnl.Height);
+            pnl.DrawToBitmap(memoryimg, new Rectangle(0, 0, pnl.Width, pnl.Height));
+        }
+        private void printSettings(DataGridView pnl)
+        {
+            PrinterSettings ps = new PrinterSettings();
+            dataListV = pnl;
+            getprintarea(pnl);
+            printPreviewDialog1.Document = printDocument1;
+            printDocument1.PrintPage += new PrintPageEventHandler(printDocument1_PrintPage);
+            printPreviewDialog1.ShowDialog();
         }
 
         private void EffVente_Click(object sender, EventArgs e)
         {
 
         }
-
         private void btnReturn_Click(object sender, EventArgs e)
         {
             AccueilForm af = new AccueilForm();
@@ -484,9 +457,89 @@ namespace QualiTech
             RefreshGridBL();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnActualise_Click(object sender, EventArgs e)
         {
             RefreshGridList();
         }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // Vérifiez s'il y a une ligne sélectionnée dans dataGridBL
+                if (dataGridBL.SelectedRows.Count > 0)
+                {
+                    // Obtenez l'ID de la vente sélectionnée
+                    int venteId = Convert.ToInt32(dataGridBL.SelectedRows[0].Cells["Numero_BC"].Value);
+
+                    // Obtenez l'objet vente correspondant à l'ID sélectionné
+                    var venteToDelete = GSe.Vente.FirstOrDefault(v => v.VenteId == venteId);
+
+                    // Vérifiez si la vente existe
+                    if (venteToDelete != null)
+                    {
+                        // Supprimez d'abord les détails de vente associés à cette vente
+                        var detailsToDelete = GSe.DetailVente.Where(d => d.VenteId == venteId);
+                        GSe.DetailVente.RemoveRange(detailsToDelete);
+                        // Supprimez ensuite la vente elle-même de la base de données
+                        GSe.Vente.Remove(venteToDelete);
+                        // Enregistrez les modifications dans la base de données
+                        GSe.SaveChanges();
+
+                        // Rafraîchissez les grilles de données
+                        RefreshGridBL();
+                        RefreshGridList();
+
+                        MessageBox.Show("La vente a été supprimée avec succès.", "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show("La vente sélectionnée n'existe pas.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Veuillez sélectionner une vente à supprimer.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Une erreur est survenue : " + ex.Message, "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        private void DisplaySelectedSaleInfo()
+        {
+            if (dataGridBL.SelectedRows.Count > 0)
+            {
+                DataGridViewRow selectedRow = dataGridBL.SelectedRows[0];
+
+                // Récupérez les informations de la vente sélectionnée à partir de la ligne sélectionnée dans dataGridBL
+                int venteId = Convert.ToInt32(selectedRow.Cells["Numero_BC"].Value);
+                DateTime dateVente = Convert.ToDateTime(selectedRow.Cells["Date_Vente"].Value);
+                string entrepriseClient = selectedRow.Cells["Client"].Value.ToString();
+                decimal montantTotal = Convert.ToDecimal(selectedRow.Cells["Montant_Total"].Value);
+                tabControl1.SelectedTab = EffVente;
+                // Affichez les informations dans les contrôles correspondants
+                NumFacture.Text = venteId.ToString() + "/2024";
+                lblFacture.Text = venteId.ToString() + "/2024";
+                dateSortie.Value = dateVente;
+                comboClt.Text = entrepriseClient;
+                lblPrixT.Text = montantTotal.ToString() + " Dhs";
+            }
+            else
+            {
+                // Effacez les valeurs des contrôles si aucune ligne n'est sélectionnée
+                NumFacture.Text = "";
+                dateSortie.Value = DateTime.Now;
+                comboClt.SelectedIndex = -1;
+                lblPrixT.Text = "";
+            }
+        }
+
+        private void dataGridBL_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            DisplaySelectedSaleInfo();
+        }
     }
 }
+

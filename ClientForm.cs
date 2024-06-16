@@ -89,12 +89,12 @@ namespace QualiTech
                             TypeArticleId = (int)comboType.SelectedValue
                         });
                         GSe.SaveChanges();
+                        MessageBox.Show("Added successfuly!");
                     }
                     else MessageBox.Show("Le login existe déjà.Veuillez choisir une Entreprise unique.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
                 else
                     MessageBox.Show("Fill all the fields!");
-                MessageBox.Show("Added successfuly!");
             }
             catch (Exception ex)
             {
@@ -125,37 +125,59 @@ namespace QualiTech
         }
         private void btnDelette_Click(object sender, EventArgs e)
         {
-            var clientToDelete = GSe.Clients.FirstOrDefault(u => u.Entreprise == txtSearch.Text);
-            if (clientToDelete != null)
+            try
             {
-                GSe.Clients.Remove(clientToDelete);
-                GSe.SaveChanges();
-                MessageBox.Show("Le client a été supprimé avec succès.", "Suppression", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                var clientToDelete = GSe.Clients.FirstOrDefault(u => u.Entreprise == txtSearch.Text);
+                if (clientToDelete != null)
+                {
+                    GSe.Clients.Remove(clientToDelete);
+                    GSe.SaveChanges();
+                    MessageBox.Show("Le client a été supprimé avec succès.", "Suppression", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Veuillez entrer une entreprise qui existe avant de supprimer.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("Veuillez entrer une entreprise qui existe avant de supprimer.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Une erreur s'est produite lors de la suppression du client : " + ex.Message, "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            var UpdateC = GSe.Clients.FirstOrDefault(u => u.Entreprise == txtSearch.Text);
-            if (UpdateC != null)
+            try
             {
-                UpdateC.Entreprise = txtSte.Text;
-                UpdateC.Email = txtMail.Text;
-                UpdateC.TelephoneFax = txtTel.Text;
-                UpdateC.Ville = txtVille.Text;
-                UpdateC.TypeArticleId = (int)comboType.SelectedValue;
-                GSe.SaveChanges();
-                MessageBox.Show("Updated successfuly");
+                var UpdateC = GSe.Clients.FirstOrDefault(u => u.Entreprise == txtSearch.Text);
+                if (UpdateC != null)
+                {
+                    UpdateC.Entreprise = txtSte.Text;
+                    UpdateC.Email = txtMail.Text;
+                    UpdateC.TelephoneFax = txtTel.Text;
+                    UpdateC.Ville = txtVille.Text;
+                    UpdateC.TypeArticleId = (int)comboType.SelectedValue;
+                    GSe.SaveChanges();
+                    MessageBox.Show("Updated successfuly");
+                }
+                else
+                    MessageBox.Show("Veuillez entrer un login existant avant de rechercher.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            else
-                MessageBox.Show("Veuillez entrer un login existant avant de rechercher.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            catch (Exception ex)
+            {
+                MessageBox.Show("Une erreur s'est produite lors de la mise à jour du client : " + ex.Message, "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
+
         private void btnRefresh_Click(object sender, EventArgs e)
         {
             RefreshDataGrid();
+        }
+
+        private void btnReturn_Click(object sender, EventArgs e)
+        {
+            AccueilForm af = new AccueilForm();
+            this.Hide();
+            af.Show();
         }
     }
 }
